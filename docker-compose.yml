@@ -10,15 +10,10 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     volumes:
-      - ./wireguard.conf:/config/wg_confs/esu2-zabwg0.conf
+      - ./wireguard.conf:/config/wg_confs/zabwg0.conf
       - /lib/modules:/lib/modules
         #sysctls:
         #- net.ipv4.conf.all.src_valid_mark=1
-
-  test:
-    image: busybox
-    network_mode: "service:wireguard"
-    command: "sleep 10000"
 
   zabbix-proxy:
     image: zabbix/zabbix-proxy-sqlite3:ubuntu-${ZBX_VERSION}-latest
