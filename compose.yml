@@ -1,9 +1,8 @@
 services:
-  # zabbix-proxy:
-  proxy:
-    image: zabbix/zabbix-proxy-sqlite3:ubuntu-${ZBX_VERSION}-latest
-    #container_name: zabbix-proxy
-    restart: always
+  zabbix-proxy:
+    image: zabbix/zabbix-proxy-sqlite3:latest
+    container_name: zabbix-proxy
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./zbx_env/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
@@ -12,22 +11,16 @@ services:
       - ./zbx_env/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
       - ./zbx_env/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro
       - snmptraps:/var/lib/zabbix/snmptraps:rw
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 20000
-        hard: 40000
     environment:
       #DEBUG_MODE: true
       ZBX_SERVER_HOST: "${ZBX_SERVER_HOST}"
       ZBX_HOSTNAME: "${ZBX_HOSTNAME}"
     stop_grace_period: 30s
 
-  # zabbix-agent:
-  agent:
-    image: zabbix/zabbix-agent2:ubuntu-${ZBX_VERSION}-latest
-    # container_name: zabbix-agent
-    restart: always
+  zabbix-agent:
+    image: zabbix/zabbix-agent2:latest
+    container_name: zabbix-agent
+    restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./zbx_env/etc/zabbix/zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d:ro
@@ -43,5 +36,4 @@ services:
     stop_grace_period: 5s
 
 volumes:
-  db:
   snmptraps:
