@@ -1,24 +1,8 @@
 version: '3.5'
 services:
-  wireguard:
-    image: lscr.io/linuxserver/wireguard:latest
-    restart: always
-    ports:
-      - "10051:10051"
-    container_name: wireguard
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    volumes:
-      - ./wireguard.conf:/config/wg_confs/zabwg0.conf
-      - /lib/modules:/lib/modules
-        #sysctls:
-        #- net.ipv4.conf.all.src_valid_mark=1
-
   zabbix-proxy:
     image: zabbix/zabbix-proxy-sqlite3:ubuntu-${ZBX_VERSION}-latest
     container_name: zabbix-proxy
-    network_mode: "service:wireguard"
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -57,16 +41,6 @@ services:
     privileged: true
     pid: "host"
     stop_grace_period: 5s
-
-networks:
-  default:
-    driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.239.0/24
 
 volumes:
   db:
