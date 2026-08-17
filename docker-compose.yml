@@ -1,8 +1,9 @@
 version: '3.5'
 services:
-  zabbix-proxy:
+  # zabbix-proxy:
+  proxy:
     image: zabbix/zabbix-proxy-sqlite3:ubuntu-${ZBX_VERSION}-latest
-    container_name: zabbix-proxy
+    #container_name: zabbix-proxy
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -23,10 +24,10 @@ services:
       ZBX_HOSTNAME: "${ZBX_HOSTNAME}"
     stop_grace_period: 30s
 
-  zabbix-agent:
+  # zabbix-agent:
+  agent:
     image: zabbix/zabbix-agent2:ubuntu-${ZBX_VERSION}-latest
-    container_name: zabbix-agent
-    network_mode: "service:wireguard"
+    # container_name: zabbix-agent
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
