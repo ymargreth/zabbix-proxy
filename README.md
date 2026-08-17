@@ -14,7 +14,7 @@ Configuration is very easy.
 1. clone the repo:
 
     ```sh
-    git clone https://github.com/ymargreth/eventpresenter.git
+    git clone https://github.com/ymargreth/zabbix-proxy.git
     ```
 
 2. copy the `.env.example` file to `.env` and change the values to your needs.
