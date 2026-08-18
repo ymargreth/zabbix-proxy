@@ -1,6 +1,6 @@
 services:
   zabbix-proxy:
-    image: zabbix/zabbix-proxy-sqlite3:latest
+    image: zabbix/zabbix-proxy-sqlite3:alpine-${ZBX_VERSION}
     container_name: zabbix-proxy
     restart: unless-stopped
     ports:
@@ -22,7 +22,7 @@ services:
     stop_grace_period: 30s
 
   zabbix-agent:
-    image: zabbix/zabbix-agent2:latest
+    image: zabbix/zabbix-agent2:alpine-${ZBX_VERSION}
     container_name: zabbix-agent
     restart: unless-stopped
     links:
