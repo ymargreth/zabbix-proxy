@@ -23,8 +23,8 @@ services:
     image: zabbix/zabbix-agent2:latest
     container_name: zabbix-agent
     restart: unless-stopped
-    ports:
-      - "10050:10050"
+    links:
+      - zabbix-proxy
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d:ro
@@ -32,7 +32,7 @@ services:
       - ./enc:/var/lib/zabbix/enc:ro
       - ./ssh_keys:/var/lib/zabbix/ssh_keys:ro
     environment:
-      ZBX_SERVER_HOST: "${ZBX_SERVER_HOST},127.0.0.1"
+      ZBX_SERVER_HOST: "zabbix-proxy,127.0.0.1"
       ZBX_ACTIVE_ALLOW: "true"
       ZBX_HOSTNAME: "${ZBX_HOSTNAME}"
     privileged: true
